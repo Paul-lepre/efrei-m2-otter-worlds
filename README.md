@@ -2,20 +2,31 @@
 
 ## Summary
 **[All you need to know](https://github.com/DulcheE/efrei-m2-otter-worlds#all-you-need-to-know)**
+
 [Where to find the project](https://github.com/DulcheE/efrei-m2-otter-worlds#where-to-find-the-project)
+
 [The project's concept](https://github.com/DulcheE/efrei-m2-otter-worlds#the-projects-concept)
+
 [Getting Started](https://github.com/DulcheE/efrei-m2-otter-worlds#getting-started)
 
 
 **[Advanced presentation](https://github.com/DulcheE/efrei-m2-otter-worlds#advanced-presentation)**
+
 [Synopsis](https://github.com/DulcheE/efrei-m2-otter-worlds#synopsis)
+
 [Conception](https://github.com/DulcheE/efrei-m2-otter-worlds#conception)
+
 [RoadMap](https://github.com/DulcheE/efrei-m2-otter-worlds#roadMap)
+
 [Prototype](https://github.com/DulcheE/efrei-m2-otter-worlds#prototype)
+
 
 **[Technical round-up](https://github.com/DulcheE/efrei-m2-otter-worlds#technical-round-up)**
 
+
 **[Authors](https://github.com/DulcheE/efrei-m2-otter-worlds#authors)**
+
+
 
 
 ## All you need to know
