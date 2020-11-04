@@ -1,5 +1,24 @@
 ## Project Async Programming
 
+## Summary
+**[All you need to know](https://github.com/DulcheE/efrei-m2-otter-worlds#all-you-need-to-know)**
+[Where to find the project](https://github.com/DulcheE/efrei-m2-otter-worlds#where-to-find-the-project)
+[The project's concept](https://github.com/DulcheE/efrei-m2-otter-worlds#the-projects-concept)
+[Getting Started](https://github.com/DulcheE/efrei-m2-otter-worlds#getting-started)
+
+
+**[Advanced presentation](https://github.com/DulcheE/efrei-m2-otter-worlds#advanced-presentation)**
+[Synopsis](https://github.com/DulcheE/efrei-m2-otter-worlds#synopsis)
+[Conception](https://github.com/DulcheE/efrei-m2-otter-worlds#conception)
+[RoadMap](https://github.com/DulcheE/efrei-m2-otter-worlds#roadMap)
+[Prototype](https://github.com/DulcheE/efrei-m2-otter-worlds#prototype)
+
+**[Technical round-up](https://github.com/DulcheE/efrei-m2-otter-worlds#technical-round-up)**
+
+**[Authors](https://github.com/DulcheE/efrei-m2-otter-worlds#authors)**
+
+
+## All you need to know
 
 ### Where to find the project
 Here is the Github repository :
@@ -13,7 +32,7 @@ https://build-your-fleet.herokuapp.com/
 
 
 ### The project's concept
-The goal of this project is to create a website using the VueX framework, with both a Front-End and a Back-End side.
+The goal of this project is to create a website using the Vue.js framework, with both a Front-End and a Back-End side.
 
 Otter Worlds is a set of worldbuilding tools that helps you create, organize and store your fictional world's settings.
 With wiki-like articles, interactive maps, historical timelines, and a full novel-writing software, we have all the tools you’ll need to run your RPG Campaign, or write your novel !
