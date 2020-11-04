@@ -75,33 +75,82 @@ So we can divide the functionalities we want to implement in two big categories:
 * Blog
   * Chat around an ongoing campain
   
-The point of our project is to offer an easy to use solution very similar to software like **[worldAnvil]**(https://www.worldanvil.com) to help manage worldbuilding and campaign management for tabletop RPG players.
+The point of our project is to offer an easy to use solution very similar to software like **[worldAnvil](https://www.worldanvil.com)** to help manage worldbuilding and campaign management for tabletop RPG players.
 
 (schéma n°2)
 
 
 ### Conception
 To implement all of this, we will of course need a Database, which means we also need a REST API with our Front to communicate with it.
-To easily develop the back and the front together, we will use the framework **[Nuxt]**(https://nuxtjs.org) to have a Front in **[Vue.js]**(https://fr.vuejs.org) and other routes for the back in **[Node.js]**(https://nodejs.org). For the database, we will use **[Mario DB](https://mariadb.org)** which is an open source database engine based on the same core as the MySQL database engine. The advantages of **[Mario DB](https://mariadb.org)** over other database engine are the special type existing in MariaDB (especially the Auto increment) and the possibility to implement PL/SQL triggers and programs.
+To easily develop the back and the front together, we will use the framework **[Nuxt](https://nuxtjs.org)** to have a Front in **[Vue.js](https://fr.vuejs.org)** and other routes for the back in **[Node.js](https://nodejs.org)**. For the database, we will use **[Mario DB](https://mariadb.org)** which is an open source database engine based on the same core as the MySQL database engine. The advantages of **[Mario DB](https://mariadb.org)** over other database engine are the special type existing in MariaDB (especially the Auto increment) and the possibility to implement PL/SQL triggers and programs.
 
 (schéma n°3)
 
-Regarding the front, we will use as UI Framework **[Vuetify]**(https://vuetifyjs.com) which is modular, responsive, and performant. For all the API calls to the back, we will use Axios and we will manage the state of the client application with Vuex.
+Regarding the front, we will use as UI Framework **[Vuetify](https://vuetifyjs.com)** which is modular, responsive, and performant. For all the API calls to the back, we will use Axios and we will manage the state of the client application with Vuex.
 For complex functionalities, like the edition of wiki pages we will use a WYSIWYG editor to have the most complete formatting and Openlayers for all the functionalities of the custom maps.
 For the back, we will use express to create all the routes of the API and the module mariadb to communicate with the Database.
 The database will contain all the different data needed by the application in tables with relationship links.
 
 
 
+### RoadMap
+
+* Phase 1 : configuration
+  * Creation of the database
+  * Configuration of the nuxt project
+  * Creation of development environment
+* Phase 2 : start API creation
+  * API
+    * Universe
+    * User
+    * Article
+    * Photo
+* Phase 3 : API continuation and webapp development
+  * API
+    * Map
+    * Interest Point
+    * Timeline
+  * WebApp
+    * Home page
+    * Login page
+    * Universe management
+    * Cunsult Universes
+* Phase 4 : configuration
+  * API (implementation of Character's endpoints)
+    * Character
+    * Inventory
+    * Stat
+  * WebApp
+    * Implementation of Maps and Interest Pointe
+    * Implementation of the Timeline
+* Phase 5 : configuration
+  * WebApp
+    * Character creation (with stats)
+    * Character management
+    * Inventory management
+* Phase 6 : deployement
+  * deployement on Heroku
+
+
+
+### Prototype
+In this prototype we will have set up the final database. The different tables as well as the links between them will be designed. So we can start adding elements easily and build on this solid base to continue the development.
+We will also set up the API : thanks to this feature, we will be able to start retrieving a page.
+We will have a first front end with an API call, so we can display our database elements. 
+For the final result of the site and to understand the architecture of the site we will create a figma document. This document will allow us to schematize the structure of the site, to see the interaction between the different pages and thus it will be easier to develop the different pages and their interaction. 
+
+
+
+
 ## Technical round-up
 The whole project was made using :
-* [Node.js](https://nodejs.org) - An asynchronous event-driven JavaScript runtime designed to build scalable network applications
-* [Vue.js](https://fr.vuejs.org) - Javascript's framework
-* [Vuetify](https://vuetifyjs.com) - a [Vue.js](https://fr.vuejs.org)'s UI library
-* [Nuxt](https://nuxtjs.org) - a [Vue.js](https://fr.vuejs.org)'s framework that enables to make singlepage websites (back and front on the same project)
-* [Axios](https://github.com/axios) - Promise based HTTP client for the browser and [Node.js](https://nodejs.org)
-* [Vuex](https://vuex.vuejs.org) -  State management pattern + library for [Vue.js](https://fr.vuejs.org) applications
-* [Mario DB](https://mariadb.org) - the database, chosen for its PL/SQL triggers and programs
+* **[Node.js](https://nodejs.org)** - An asynchronous event-driven JavaScript runtime designed to build scalable network applications
+* **[Vue.js](https://fr.vuejs.org)** - Javascript's framework
+* **[Vuetify](https://vuetifyjs.com)** - a **[Vue.js](https://fr.vuejs.org)**'s UI library
+* **[Nuxt](https://nuxtjs.org)** - a **[Vue.js](https://fr.vuejs.org)**'s framework that enables to make singlepage websites (back and front on the same project)
+* **[Axios](https://github.com/axios)** - Promise based HTTP client for the browser and **[Node.js](https://nodejs.org)**
+* **[Vuex](https://vuex.vuejs.org)** -  State management pattern + library for **[Vue.js](https://fr.vuejs.org)** applications
+* **[Mario DB](https://mariadb.org)** - the database, chosen for its PL/SQL triggers and programs
 
 
 
