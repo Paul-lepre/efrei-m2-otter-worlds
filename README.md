@@ -95,7 +95,7 @@ The database will contain all the different data needed by the application in ta
 
 ## Technical round-up
 The whole project was made using :
-* **[Node.js]**(https://nodejs.org) - An asynchronous event-driven JavaScript runtime designed to build scalable network applications
+* [Node.js](https://nodejs.org) - An asynchronous event-driven JavaScript runtime designed to build scalable network applications
 * **[Vue.js]**(https://fr.vuejs.org) - Javascript's framework
 * **[Vuetify]**(https://vuetifyjs.com) - a **[Vue.js]**(https://fr.vuejs.org)'s UI library
 * **[Nuxt]**(https://nuxtjs.org) - a **[Vue.js]**(https://fr.vuejs.org)'s framework that enables to make singlepage websites (back and front on the same project)
