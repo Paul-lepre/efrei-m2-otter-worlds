@@ -59,7 +59,7 @@ To fully end the download, open a console tab where the project is located, and 
   $npm install
   
 To make the server operationnal, please enter :
-  $npm build
+  $npm run dev
 ```
 
 
