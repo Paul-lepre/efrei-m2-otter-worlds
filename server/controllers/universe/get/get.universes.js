@@ -5,6 +5,6 @@ export default function getUniverses (req, res) {
   //       to make it work
   Universe.getAll()
     .then((universes) => {
-      res.status(200).json(Universe.asResourceList(universes))
+      res.status(200).json(Universe.asResourceList(req, universes))
     })
 }
