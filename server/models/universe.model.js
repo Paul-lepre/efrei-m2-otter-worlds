@@ -31,7 +31,7 @@ export default class Universe {
         id: this.idUniverse,
         name: this.name,
         description: this.description,
-        bIsPublic: this.bIsPublic
+        bIsPublic: !!this.bIsPublic
       },
       `${baseAPI(req)}universes/${this.idUniverse}`)
 
