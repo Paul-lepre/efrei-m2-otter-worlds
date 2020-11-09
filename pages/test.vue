@@ -13,14 +13,14 @@
               </div>
               <div>
                 <v-icon small>
-                  {{ universe.public ? 'mdi-book-lock-open-outline' : 'mdi-book-lock-outline' }}
+                  {{ universe.bIsPublic ? 'mdi-book-lock-open-outline' : 'mdi-book-lock-outline' }}
                 </v-icon>
               </div>
             </div>
           </v-container>
         </v-card-title>
         <v-card-subtitle>
-          <i>{{ universe.user.username }}</i>
+          <i>{{ (universe.user || {username: 'unknow' }).username }}</i>
         </v-card-subtitle>
         <v-card-text>
           {{ universe.description }}
@@ -52,19 +52,12 @@ export default {
       .then((document) => {
         this.universes = document.universes
         return Promise.all(this.universes.map((universe) => {
-          console.log('here')
-          console.log(universe._links.user.href)
           traverson.from(universe._links.user.href)
             .getResource().result
             .then((document) => {
-              console.log('here2')
-              universe.user = document
+              this.$set(universe, 'user', document)
             })
         }))
-      })
-      .then(() => {
-        console.log('here3')
-        console.log(this.universes)
       })
       .catch((err) => {
         throw err.message
