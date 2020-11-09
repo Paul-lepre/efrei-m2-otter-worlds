@@ -14,7 +14,7 @@ apiRouter.get('/', (req, res) => {
     _links: {
       articles: `${baseAPI(req)}articles`,
       characters: `${baseAPI(req)}characters`,
-      universes: `$${baseAPI(req)}universes`,
+      universes: `${baseAPI(req)}universes`,
       users: `${baseAPI(req)}users`
     }
   })
