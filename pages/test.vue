@@ -20,7 +20,7 @@
           </v-container>
         </v-card-title>
         <v-card-subtitle>
-          <i>{{ universe.user }}</i>
+          <i>{{ universe.user.username }}</i>
         </v-card-subtitle>
         <v-card-text>
           {{ universe.description }}
@@ -53,8 +53,8 @@ export default {
         this.universes = document.universes
         return Promise.all(this.universes.map((universe) => {
           console.log('here')
-          console.log(universe._links.user)
-          traverson.from(universe._links.user)
+          console.log(universe._links.user.href)
+          traverson.from(universe._links.user.href)
             .getResource().result
             .then((document) => {
               console.log('here2')
@@ -63,6 +63,7 @@ export default {
         }))
       })
       .then(() => {
+        console.log('here3')
         console.log(this.universes)
       })
       .catch((err) => {
