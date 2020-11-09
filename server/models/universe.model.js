@@ -11,7 +11,7 @@ export default class Universe {
   description
   /** @type {Boolean} */
   bIsPublic
-  /** @type {String} */
+  /** @type {Number} */
   idUser
 
   /**
