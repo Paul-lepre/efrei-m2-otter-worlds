@@ -1,26 +1,10 @@
 import { baseAPI } from '../routes/routes'
+import mariadbStore from '../mariadb-store'
 const hal = require('hal')
-
-const _universes = [
-  {
-    id: 0,
-    userId: 1,
-    name: 'DnD',
-    description: 'this is the typical fantasy universe',
-    bIsPublic: true
-  },
-  {
-    id: 1,
-    userId: 3,
-    name: 'Warhammer',
-    description: 'this is the typical heretic universe',
-    bIsPublic: true
-  }
-]
 
 export default class Universe {
   /** @type {Number} */
-  id
+  idUniverse
   /** @type {String} */
   name
   /** @type {String} */
@@ -28,35 +12,42 @@ export default class Universe {
   /** @type {Boolean} */
   bIsPublic
   /** @type {String} */
-  userId
+  idUser
 
   /**
    * @param {Universe} universe
    */
   constructor (universe) {
-    this.id = universe.id
+    this.idUniverse = universe.idUniverse
     this.name = universe.name
     this.description = universe.description
     this.bIsPublic = universe.bIsPublic
-    this.userId = universe.userId
+    this.idUser = universe.idUser
   }
 
   asResource (req) {
     const resource = hal.Resource(
       {
-        id: this.id,
+        id: this.idUniverse,
         name: this.name,
         description: this.description,
         bIsPublic: this.bIsPublic
-      }, `${baseAPI(req)}universes/${this.id}`)
+      },
+      `${baseAPI(req)}universes/${this.idUniverse}`)
 
-    resource.link('user', `${baseAPI(req)}users/${this.userId}`)
+    resource.link('user',
+      `${baseAPI(req)}users/${this.idUser}`)
 
-    resource.link('characters', `${baseAPI(req)}universes/${this.id}/characters`)
-    resource.link('maps', `${baseAPI(req)}universes/${this.id}/maps`)
-    resource.link('templateCategories', `${baseAPI(req)}universes/${this.id}/templateCategories`)
-    resource.link('timelines', `${baseAPI(req)}universes/${this.id}/timelines`)
-    resource.link('topics', `${baseAPI(req)}universes/${this.id}/topics`)
+    resource.link('characters',
+      `${baseAPI(req)}universes/${this.idUniverse}/characters`)
+    resource.link('maps',
+      `${baseAPI(req)}universes/${this.idUniverse}/maps`)
+    resource.link('templateCategories',
+      `${baseAPI(req)}universes/${this.idUniverse}/templateCategories`)
+    resource.link('timelines',
+      `${baseAPI(req)}universes/${this.idUniverse}/timelines`)
+    resource.link('topics',
+      `${baseAPI(req)}universes/${this.idUniverse}/topics`)
 
     return resource
   }
@@ -80,9 +71,7 @@ export default class Universe {
    * @returns {Promise<Universe[]>}
    */
   static async getAll () {
-    return await new Promise((resolve, reject) => {
-      resolve(_universes)
-    })
+    return await mariadbStore.client.query('SELECT * FROM universe')
   }
 
   /**
@@ -90,11 +79,11 @@ export default class Universe {
    * @returns {Promise<Universe>}
    */
   static async get (id) {
-    return await new Promise((resolve, reject) => {
-      const universe = _universes.find(_ => _.id === id)
+    const conn = (await mariadbStore.client.query(`SELECT * FROM universe WHERE idUniverse = ${id}`))[0]
+    if (!conn) {
+      throw new Error(`Universe ${id} don't exist !`)
+    }
 
-      if (universe === undefined) { return reject(new Error(`Universe ${id} don't exist !`)) }
-      resolve(new Universe(universe))
-    })
+    return new Universe(conn)
   }
 }

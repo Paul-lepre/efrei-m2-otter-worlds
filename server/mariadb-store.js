@@ -10,6 +10,7 @@ class Mariadb {
    * @param { import('mariadb').ClientConfig } config
    */
   async init (config) {
+    console.log(config)
     this.pool = mariadb.createPool(config)
     this.client = await this.pool.getConnection()
   }
