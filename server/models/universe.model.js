@@ -1,5 +1,5 @@
+import { baseAPI } from '../routes/routes'
 const hal = require('hal')
-const baseAPI = 'http://localhost:3000/api/'
 
 const _universes = [
   {
@@ -41,16 +41,22 @@ export default class Universe {
     this.userId = universe.userId
   }
 
-  asResource () {
+  asResource (req) {
     const resource = hal.Resource(
       {
         id: this.id,
         name: this.name,
         description: this.description,
         bIsPublic: this.bIsPublic
-      }, `${baseAPI}universes/${this.id}`)
+      }, `${baseAPI(req)}universes/${this.id}`)
 
-    resource.link('user', `${baseAPI}users/${this.userId}`)
+    resource.link('user', `${baseAPI(req)}users/${this.userId}`)
+
+    resource.link('characters', `${baseAPI(req)}universes/${this.id}/characters`)
+    resource.link('maps', `${baseAPI(req)}universes/${this.id}/maps`)
+    resource.link('templateCategories', `${baseAPI(req)}universes/${this.id}/templateCategories`)
+    resource.link('timelines', `${baseAPI(req)}universes/${this.id}/timelines`)
+    resource.link('topics', `${baseAPI(req)}universes/${this.id}/topics`)
 
     return resource
   }
@@ -58,14 +64,14 @@ export default class Universe {
   /**
    * @param universes {Universe[]}
    */
-  static asResourceList (universes) {
+  static asResourceList (req, universes) {
     const resourceUniverses = []
     for (const universe of universes) {
       const _universe = new Universe(universe)
-      resourceUniverses.push(_universe.asResource().toJSON())
+      resourceUniverses.push(_universe.asResource(req).toJSON())
     }
 
-    const resource = hal.Resource({ universes: resourceUniverses }, `${baseAPI}universes`)
+    const resource = hal.Resource({ universes: resourceUniverses }, `${baseAPI(req)}universes`)
 
     return resource
   }

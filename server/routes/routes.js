@@ -1,19 +1,23 @@
 import { Router } from 'express'
 import universeRouter from './universe.js' // after the import from express
-const router = Router()
-const baseAPI = 'http://localhost:3000/api/'
+const apiRouter = Router()
 
-router.use('/universes', universeRouter) // before the export default
+const apiRoute = '/api/v1/'
+const baseAPI = (req) => {
+  return req.protocol + '://' + req.get('host') + apiRoute
+}
 
-router.get('/', (req, res) => {
+apiRouter.use('/universes', universeRouter) // before the export default
+
+apiRouter.get('/', (req, res) => {
   res.json({
     _links: {
-      articles: `${baseAPI}articles`,
-      characters: `${baseAPI}characters`,
-      universes: `${baseAPI}universes`,
-      users: `${baseAPI}users`
+      articles: `${baseAPI(req)}articles`,
+      characters: `${baseAPI(req)}characters`,
+      universes: `$${baseAPI(req)}universes`,
+      users: `${baseAPI(req)}users`
     }
   })
 })
 
-export default router
+export { apiRouter, apiRoute, baseAPI }
