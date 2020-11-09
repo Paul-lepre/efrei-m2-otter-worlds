@@ -19,7 +19,9 @@
     "hal": "^1.2.0",
     "mariadb": "^2.5.1",
     "morgan": "^1.10.0",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "traverson": "^7.0.1",
+    "traverson-promise": "0.0.9"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
