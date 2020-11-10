@@ -5,10 +5,21 @@
       <v-spacer />
       <!-- App-bar logo -->
       <router-link to="/">
+        <!-- Logo for small screens -->
         <v-img
-          class="zoom-sm"
+          class="zoom-sm shrink d-flex d-md-none"
           href="/"
-          src="/logo-text-full.png"
+          src="/logo.png"
+          max-height="50"
+          max-width="50"
+          contain
+        />
+
+        <!-- Logo for big screens -->
+        <v-img
+          class="zoom-sm shrink d-none d-md-flex"
+          href="/"
+          src="/logo-text.png"
           max-height="80"
           max-width="180"
           contain
@@ -65,7 +76,7 @@
                 />
               </v-avatar>
             </v-badge>
-            {{ name }}
+            <span class="shrink d-none d-lg-flex">{{ name }}</span>
           </v-btn>
         </template>
 
@@ -99,6 +110,7 @@
         </v-icon>
         Login / Sign in
       </v-btn>
+
       <v-spacer />
 
       <!-- Tabs -->
@@ -115,7 +127,7 @@
             router
             exact
           >
-            {{ item.title }}
+            <span class="shrink d-none d-sm-flex">{{ item.title }}</span>
             <v-icon>{{ item.icon }}</v-icon>
           </v-tab>
         </v-tabs>
@@ -395,7 +407,14 @@ export default {
         {
           icon: 'mdi-earth',
           title: 'Universes',
-          to: '/universe'
+          to: '/universe',
+          content: [
+            {
+              icon: 'mdi-hammer',
+              title: 'Warhammer',
+              to: '/universe/warhammer'
+            }
+          ]
         },
         {
           icon: 'mdi-human-handsup',
