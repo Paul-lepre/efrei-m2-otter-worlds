@@ -77,4 +77,40 @@ export default class Template {
 
     return new Template(conn)
   }
+
+  /**
+   * @param {Template} template
+   * @returns {Number} the id of the new inserted template
+   */
+  static async add (template) {
+    const sql = `
+      INSERT INTO 
+        template(string, bBoolean, idOther) 
+        VALUES(?, ?, ?)`
+    // All the params we have to put to insert a new row in the table
+    const params = [template.string, template.bBoolean, template.idOther]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.insertId || -1
+  }
+
+  /**
+   * @param {Number} id
+   * @param {Template} template
+   * @returns {Boolean} if the template could have been updated
+   */
+  static async update (id, template) {
+    const sql = `
+      UPDATE template
+        SET string = ?, bBoolean = ?
+        WHERE idTemplate = ?`
+    // All the cols you want to update for a template + the id of the template you want to update
+    // /!\ You may never want to change the links
+    const params = [template.string, template.bBoolean, id]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.affectedRows === 1
+  }
 }
