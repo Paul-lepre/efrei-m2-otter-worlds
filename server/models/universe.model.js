@@ -21,8 +21,8 @@ export default class Universe {
     this.idUniverse = universe.idUniverse
     this.name = universe.name
     this.description = universe.description
-    this.bIsPublic = !!universe.bIsPublic
-    this.idUser = universe.idUser
+    this.bIsPublic = universe.bIsPublic
+    this.idUser = universe.user_idUser || universe.idUser
   }
 
   asResource (req) {
@@ -88,18 +88,58 @@ export default class Universe {
   }
 
   /**
+   * @param {Number} id
+   * @returns {Promise<Characters>}
+   */
+  static async getCharacters (id) {
+    return await mariadbStore.client.query('SELECT * FROM `character` WHERE universe_idUniverse = ?', id)
+  }
+
+  /**
    * @param {Universe} universe
    * @returns {Number} the id of the new inserted universe
    */
   static async add (universe) {
     const sql = `
       INSERT INTO 
-        universe(name, description, bIsPublic, idUser) 
+        universe(name, description, bIsPublic, user_idUser) 
         VALUES(?, ?, ?, ?)`
-    const params = [universe.name, universe.description, universe.bIsPublic, universe.idUser]
+    const params = [universe.name, universe.description, !!universe.bIsPublic, universe.idUser]
 
     const rows = await mariadbStore.client.query(sql, params)
 
     return rows.insertId || -1
+  }
+
+  /**
+   * @param {Number} id
+   * @param {Universe} universe
+   * @returns {Boolean} if the universe could have been updated
+   */
+  static async update (id, universe) {
+    const sql = `
+      UPDATE universe
+        SET name = ?, description = ?, bIsPublic = ?
+        WHERE idUniverse = ?`
+    const params = [universe.name, universe.description, universe.bIsPublic, id]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.affectedRows === 1
+  }
+
+  /**
+   * @param {Number} id
+   * @returns {Boolean} if the universe could have been removed
+   */
+  static async remove (id) {
+    const sql = `
+      DELETE FROM universe
+        WHERE idUniverse = ?`
+    const params = [id]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.affectedRows === 1
   }
 }
