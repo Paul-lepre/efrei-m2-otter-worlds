@@ -7,6 +7,8 @@ export default class User {
   idUser
   /** @type {String} */
   username
+  /** @type {String} */
+  password
 
   /**
    * @param {User} user
@@ -14,6 +16,7 @@ export default class User {
   constructor (user) {
     this.idUser = user.idUser
     this.username = user.username
+    this.password = user.password
   }
 
   asResource (req) {
@@ -63,5 +66,36 @@ export default class User {
     }
 
     return new User(conn)
+  }
+
+  /**
+   * @param {User} user
+   * @returns {Promise<User>}
+   */
+  static async add (user) {
+    const sql = 'INSERT INTO user(username, password) VALUES(?,?)'
+    const params = [user.username, user.password]
+    const row = await mariadbStore.client.query(sql, params)
+
+    return row.insertId || -1
+  }
+
+  /**
+   * @param {User} user
+   * @returns {Promise<User>}
+   */
+  static async suppr (user) {
+    const sql = 'SELECT * FROM user WHERE idUser = ?'
+    const param = [user.idUser]
+    const row = await mariadbStore.client.query(sql, param)
+    const result = new User(row[0])
+    console.log(result)
+    if (result.password === user.password) {
+      console.log('ok to delete')
+      console.log(user)
+      return await mariadbStore.client.query('DELETE FROM user WHERE idUser = ?', [user.idUser])
+    } else {
+      throw new Error('wrong passeword')
+    }
   }
 }
