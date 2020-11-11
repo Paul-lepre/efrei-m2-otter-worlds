@@ -21,7 +21,7 @@ export default class Universe {
     this.idUniverse = universe.idUniverse
     this.name = universe.name
     this.description = universe.description
-    this.bIsPublic = universe.bIsPublic
+    this.bIsPublic = !!universe.bIsPublic
     this.idUser = universe.idUser
   }
 
@@ -79,11 +79,27 @@ export default class Universe {
    * @returns {Promise<Universe>}
    */
   static async get (id) {
-    const conn = (await mariadbStore.client.query(`SELECT * FROM universe WHERE idUniverse = ${id}`))[0]
-    if (!conn) {
+    const rows = (await mariadbStore.client.query('SELECT * FROM universe WHERE idUniverse = ?', id))[0]
+    if (!rows) {
       throw new Error(`Universe ${id} don't exist !`)
     }
 
-    return new Universe(conn)
+    return new Universe(rows)
+  }
+
+  /**
+   * @param {Universe} universe
+   * @returns {Number} the id of the new inserted universe
+   */
+  static async add (universe) {
+    const sql = `
+      INSERT INTO 
+        universe(name, description, bIsPublic, idUser) 
+        VALUES(?, ?, ?, ?)`
+    const params = [universe.name, universe.description, universe.bIsPublic, universe.idUser]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.insertId || -1
   }
 }
