@@ -1,7 +1,7 @@
 module.exports = {
   SESSION_SECRET: 'randomly generated string',
-  MARIADB_HOST: 'localhost',
-  MARIADB_DB: 'example_app',
-  MARIADB_USER: 'root',
-  MARIADB_PASSWORD: 'admin'
+  DB_HOST: 'localhost',
+  DB_DATABASE: 'example_app',
+  DB_USER: 'root',
+  DB_PASSWORD: 'admin'
 }

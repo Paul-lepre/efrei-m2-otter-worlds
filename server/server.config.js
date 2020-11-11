@@ -11,9 +11,9 @@ function e (param) {
 export default {
   SESSION_SECRET: e('SESSION_SECRET'),
   MARIADB: {
-    host: e('MARIADB_HOST'),
-    database: e('MARIADB_DB'),
-    user: e('MARIADB_USER'),
-    password: e('MARIADB_PASSWORD')
+    host: e('DB_HOST'),
+    database: e('DB_DATABASE'),
+    user: e('DB_USER'),
+    password: e('DB_PASSWORD')
   }
 }
