@@ -120,16 +120,16 @@
       <!-- Tabs -->
       <template v-slot:extension>
         <v-tabs
-          fixed-tabs
+          grow
           icons-and-text
           center-active
+          centered
         >
           <v-menu
             v-for="(item, i) in itemsTab"
             :key="i"
             offset-y
             open-on-hover
-            bottom
             origin="center center"
             transition="scale-transition"
           >
@@ -200,6 +200,8 @@ export default {
     return {
       name: '',
       // name: 'John DOE',
+      displayDefaultTabs: false,
+      isDialogActive: false,
       itemsProfile: [
         {
           icon: 'mdi-earth',
@@ -221,13 +223,48 @@ export default {
           title: 'Logout',
           to: '/logout'
         }
-      ],
-      isDialogActive: false
+      ]
     }
   },
 
   computed: {
-    itemsTab () {
+    itemsTabDefault () {
+      // We declare some items
+      const items = [
+        {
+          icon: 'mdi-earth',
+          title: 'Getting Started',
+          to: '/'
+        },
+        {
+          icon: 'mdi-earth',
+          title: 'Most known Universes',
+          to: '/universe',
+          content: [
+            {
+              title: 'Warhammer',
+              srcImg: 'https://aos-tactics.com/wp-content/uploads/2017/02/warhammer-age-of-sigmar-hammer-icon-standard-t-shirt.png',
+              to: '/universe/warhammer'
+            },
+            {
+              title: 'The Witcher',
+              srcImg: 'https://dl1.cbsistatic.com/i/2016/10/20/2b9b17c0-e64a-4d37-955b-2bbff7f9eb10/f7a6e8014e5e20cf9c4da025aec9010d/imgingest-6907707685270604403.png',
+              to: '/universe/witcher'
+            },
+            {
+              title: 'Dungeon & Dragon',
+              srcImg: 'https://i.pinimg.com/originals/48/cb/53/48cb5349f515f6e59edc2a4de294f439.png',
+              to: '/universe/dd'
+            }
+          ]
+        }
+      ]
+
+      // We return the items
+      return items
+    },
+
+    itemsTabAdvanced () {
       // We declare some items
       const items = [
         {
@@ -324,6 +361,14 @@ export default {
 
       // We return the items
       return items
+    },
+
+    itemsTab () {
+      if (this.displayDefaultTabs) {
+        return this.itemsTabDefault
+      } else {
+        return this.itemsTabAdvanced
+      }
     },
 
     isUserLogged () {
