@@ -71,6 +71,22 @@ export default class User {
   }
 
   /**
+   * @param {Number} id
+   * @returns {Promise<Characters>}
+   */
+  static async getCharacters (id) {
+    return await mariadbStore.client.query('SELECT * FROM `character` WHERE user_idUser = ?', id)
+  }
+
+  /**
+   * @param {Number} id
+   * @returns {Promise<Universe>}
+   */
+  static async getUniverses (id) {
+    return await mariadbStore.client.query('SELECT * FROM `universe` WHERE user_idUser = ?', id)
+  }
+
+  /**
    * @param {User} user
    * @returns {Promise<User>}
    */
@@ -91,11 +107,42 @@ export default class User {
     const param = [user.idUser]
     const row = await mariadbStore.client.query(sql, param)
     const result = new User(row[0])
-    console.log(result)
     if (result.password === user.password) {
-      console.log('ok to delete')
-      console.log(user)
       return await mariadbStore.client.query('DELETE FROM user WHERE idUser = ?', [user.idUser])
+    } else {
+      throw new Error('wrong passeword')
+    }
+  }
+
+  /**
+   * @param {User} user
+   * @return {Promise<User>}
+   */
+  static async modifyName (user) {
+    const sql = 'SELECT * FROM user WHERE idUser = ?'
+    const param = [user.idUser]
+    const row = await mariadbStore.client.query(sql, param)
+    const result = new User(row[0])
+    if (result.password === user.password) {
+      return await mariadbStore.client.query('UPDATE user SET username = ? WHERE idUSer = ?', [user.username, user.idUser])
+    } else {
+      throw new Error('wrong passeword')
+    }
+  }
+
+  /**
+   * @param {User} user
+   * @param {String} code
+   * @param {Number} id
+   * @return {Promise<User>}
+   */
+  static async ChangePasseword (user, code, id) {
+    const sql = 'SELECT * FROM user WHERE idUser = ?'
+    const param = [id]
+    const row = await mariadbStore.client.query(sql, param)
+    const result = new User(row[0])
+    if (result.password === code) {
+      return await mariadbStore.client.query('UPDATE user SET password = ? WHERE idUSer = ?', [user.password, id])
     } else {
       throw new Error('wrong passeword')
     }
