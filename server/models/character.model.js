@@ -62,7 +62,7 @@ export default class Character {
       resourceCharacters.push(_character.asResource(req).toJSON())
     }
 
-    const resource = hal.Resource({ characters: resourceCharacters }, `${baseAPI(req) + selfLink}`)
+    const resource = hal.Resource({ characters: resourceCharacters }, baseAPI(req) + selfLink)
 
     return resource
   }
@@ -71,7 +71,7 @@ export default class Character {
    * @returns {Promise<Character[]>}
    */
   static async getAll () {
-    return await mariadbStore.client.query('SELECT * FROM character')
+    return await mariadbStore.client.query('SELECT * FROM `character`')
   }
 
   /**
@@ -79,7 +79,7 @@ export default class Character {
    * @returns {Promise<Character>}
    */
   static async get (id) {
-    const conn = (await mariadbStore.client.query(`SELECT * FROM character WHERE idCharacter = ${id}`))[0]
+    const conn = (await mariadbStore.client.query('SELECT * FROM `character` WHERE idCharacter = ?', id))[0]
     if (!conn) {
       throw new Error(`Character ${id} don't exist !`)
     }
@@ -94,10 +94,10 @@ export default class Character {
   static async add (character) {
     const sql = `
       INSERT INTO 
-        character(string, bBoolean, idOther) 
-        VALUES(?, ?, ?)`
+        \`character\`(name, backstory, user_idUser, universe_idUniverse) 
+        VALUES(?, ?, ?, ?)`
     // All the params we have to put to insert a new row in the table
-    const params = [character.string, character.bBoolean, character.idOther]
+    const params = [character.name, character.backstory, character.idUser, character.idUniverse]
 
     const rows = await mariadbStore.client.query(sql, params)
 
@@ -111,12 +111,27 @@ export default class Character {
    */
   static async update (id, character) {
     const sql = `
-      UPDATE character
-        SET string = ?, bBoolean = ?
+      UPDATE \`character\`
+        SET name = ?, backstory = ?
         WHERE idCharacter = ?`
     // All the cols you want to update for a character + the id of the character you want to update
     // /!\ You may never want to change the links
-    const params = [character.string, character.bBoolean, id]
+    const params = [character.name, character.backstory, id]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.affectedRows === 1
+  }
+
+  /**
+   * @param {Number} id
+   * @returns {Boolean} if the character could have been removed
+   */
+  static async remove (id) {
+    const sql = `
+      DELETE FROM \`character\`
+        WHERE idCharacter = ?`
+    const params = [id]
 
     const rows = await mariadbStore.client.query(sql, params)
 
