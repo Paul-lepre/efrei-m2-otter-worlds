@@ -5,7 +5,6 @@ import characterRouter from './character.js'
 import inventoryRouter from './inventory.js'
 import templateCategoryRouter from './templateCategory.js'
 import templateStatRouter from './templateStat.js'
-// import statRouter from './stat.js'
 const apiRouter = Router()
 
 const apiRoute = '/api/v1/'
@@ -19,7 +18,6 @@ apiRouter.use('/characters', characterRouter)
 apiRouter.use('/inventories', inventoryRouter)
 apiRouter.use('/template-categories', templateCategoryRouter)
 apiRouter.use('/template-stats', templateStatRouter)
-// apiRouter.use('/stats', statRouter)
 
 apiRouter.get('/', (req, res) => {
   res.json({
@@ -27,7 +25,6 @@ apiRouter.get('/', (req, res) => {
       articles: `${baseAPI(req)}articles`,
       characters: `${baseAPI(req)}characters`,
       inventories: `${baseAPI(req)}inventories`,
-      stats: `${baseAPI(req)}stats`,
       'template-categories': `${baseAPI(req)}template-categories`,
       'template-stats': `${baseAPI(req)}template-stats`,
       universes: `${baseAPI(req)}universes`,

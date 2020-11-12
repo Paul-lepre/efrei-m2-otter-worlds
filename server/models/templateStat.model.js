@@ -31,8 +31,8 @@ export default class TemplateStat {
       {
         id: this.idTemplateStat,
         name: this.name,
-        bIsNumber: this.bIsNumber,
-        bIsRequired: this.bIsRequired
+        bIsNumber: !!this.bIsNumber,
+        bIsRequired: !!this.bIsRequired
       },
       `${baseAPI(req)}template-stats/${this.idTemplateStat}`)
 
