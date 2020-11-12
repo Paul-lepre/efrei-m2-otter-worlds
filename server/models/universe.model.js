@@ -53,16 +53,18 @@ export default class Universe {
   }
 
   /**
+   * @param req
    * @param universes {Universe[]}
+   * @param selfLink {string}
    */
-  static asResourceList (req, universes) {
+  static asResourceList (req, universes, selfLink = 'universes') {
     const resourceUniverses = []
     for (const universe of universes) {
       const _universe = new Universe(universe)
       resourceUniverses.push(_universe.asResource(req).toJSON())
     }
 
-    const resource = hal.Resource({ universes: resourceUniverses }, `${baseAPI(req)}universes`)
+    const resource = hal.Resource({ universes: resourceUniverses }, baseAPI(req) + selfLink)
 
     return resource
   }
