@@ -34,16 +34,18 @@ export default class User {
   }
 
   /**
+   * @param req
    * @param users {User[]}
+   * @param selfLink {string}
    */
-  static asResourceList (req, users) {
+  static asResourceList (req, users, selfLink = 'users') {
     const resourceUsers = []
     for (const user of users) {
       const _user = new User(user)
       resourceUsers.push(_user.asResource(req).toJSON())
     }
 
-    const resource = hal.Resource({ users: resourceUsers }, `${baseAPI(req)}users`)
+    const resource = hal.Resource({ users: resourceUsers }, baseAPI(req) + selfLink)
 
     return resource
   }
@@ -60,7 +62,7 @@ export default class User {
    * @returns {Promise<User>}
    */
   static async get (id) {
-    const conn = (await mariadbStore.client.query(`SELECT * FROM user WHERE idUser = ${id}`))[0]
+    const conn = (await mariadbStore.client.query('SELECT * FROM user WHERE idUser = ?', id))[0]
     if (!conn) {
       throw new Error(`User ${id} don't exist !`)
     }
