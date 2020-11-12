@@ -88,6 +88,20 @@ export default class User {
 
   /**
    * @param {User} user
+   * @returns {Boolean}
+   */
+  static async Login (user) {
+    const row = await mariadbStore.client.query('SELECT * FROM `user` WHERE username = ?', user.username)
+    const result = row[0]
+    if (result.password === user.password) {
+      return true
+    } else {
+      throw new Error('wrong username or passeword')
+    }
+  }
+
+  /**
+   * @param {User} user
    * @returns {Promise<User>}
    */
   static async add (user) {
