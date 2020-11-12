@@ -200,7 +200,7 @@ export default {
     return {
       name: '',
       // name: 'John DOE',
-      displayDefaultTabs: false,
+      displayDefaultTabs: true,
       isDialogActive: false,
       itemsProfile: [
         {
@@ -232,9 +232,9 @@ export default {
       // We declare some items
       const items = [
         {
-          icon: 'mdi-earth',
+          icon: 'mdi-login',
           title: 'Getting Started',
-          to: '/'
+          to: '/test'
         },
         {
           icon: 'mdi-earth',
@@ -257,6 +257,11 @@ export default {
               to: '/universe/dd'
             }
           ]
+        },
+        {
+          icon: 'mdi-account-group',
+          title: 'About us...',
+          to: '/about-us'
         }
       ]
 
