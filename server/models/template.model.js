@@ -44,16 +44,18 @@ export default class Template {
   }
 
   /**
+   * @param req
    * @param templates {Template[]}
+   * @param selfLink {string}
    */
-  static asResourceList (req, templates) {
+  static asResourceList (req, templates, selfLink = 'templates') {
     const resourceTemplates = []
     for (const template of templates) {
       const _template = new Template(template)
       resourceTemplates.push(_template.asResource(req).toJSON())
     }
 
-    const resource = hal.Resource({ templates: resourceTemplates }, `${baseAPI(req)}templates`)
+    const resource = hal.Resource({ templates: resourceTemplates }, baseAPI(req) + selfLink)
 
     return resource
   }
@@ -70,7 +72,7 @@ export default class Template {
    * @returns {Promise<Template>}
    */
   static async get (id) {
-    const conn = (await mariadbStore.client.query(`SELECT * FROM template WHERE idTemplate = ${id}`))[0]
+    const conn = (await mariadbStore.client.query('SELECT * FROM template WHERE idTemplate = ?', id))[0]
     if (!conn) {
       throw new Error(`Template ${id} don't exist !`)
     }
@@ -108,6 +110,21 @@ export default class Template {
     // All the cols you want to update for a template + the id of the template you want to update
     // /!\ You may never want to change the links
     const params = [template.string, template.bBoolean, id]
+
+    const rows = await mariadbStore.client.query(sql, params)
+
+    return rows.affectedRows === 1
+  }
+
+  /**
+   * @param {Number} id
+   * @returns {Boolean} if the template could have been removed
+   */
+  static async remove (id) {
+    const sql = `
+      DELETE FROM template
+        WHERE idTemplate = ?`
+    const params = [id]
 
     const rows = await mariadbStore.client.query(sql, params)
 
