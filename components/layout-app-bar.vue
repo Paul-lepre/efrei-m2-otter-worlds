@@ -188,6 +188,7 @@
 
 <script>
 import LayoutLoginDialog from '@/components/layout-login-dialog'
+const traverson = require('traverson-promise')
 
 export default {
   name: 'LayoutAppBar',
@@ -202,6 +203,7 @@ export default {
       // name: 'John DOE',
       displayDefaultTabs: true,
       isDialogActive: false,
+      universes: [],
       itemsProfile: [
         {
           icon: 'mdi-earth',
@@ -234,29 +236,13 @@ export default {
         {
           icon: 'mdi-login',
           title: 'Getting Started',
-          to: '/test'
+          to: '/getting-started'
         },
         {
           icon: 'mdi-earth',
           title: 'Most known Universes',
-          to: '/universe',
-          content: [
-            {
-              title: 'Warhammer',
-              srcImg: 'https://aos-tactics.com/wp-content/uploads/2017/02/warhammer-age-of-sigmar-hammer-icon-standard-t-shirt.png',
-              to: '/universe/warhammer'
-            },
-            {
-              title: 'The Witcher',
-              srcImg: 'https://dl1.cbsistatic.com/i/2016/10/20/2b9b17c0-e64a-4d37-955b-2bbff7f9eb10/f7a6e8014e5e20cf9c4da025aec9010d/imgingest-6907707685270604403.png',
-              to: '/universe/witcher'
-            },
-            {
-              title: 'Dungeon & Dragon',
-              srcImg: 'https://i.pinimg.com/originals/48/cb/53/48cb5349f515f6e59edc2a4de294f439.png',
-              to: '/universe/dd'
-            }
-          ]
+          to: '/most-known-universes',
+          content: []
         },
         {
           icon: 'mdi-account-group',
@@ -265,6 +251,13 @@ export default {
         }
       ]
 
+      // We fill the items concerning the universes (if any)
+      this.universes.forEach(u => items[1].content.push({
+        title: u.name,
+        srcImg: 'https://i.pinimg.com/originals/48/cb/53/48cb5349f515f6e59edc2a4de294f439.png',
+        to: '/' + u.name
+      }))
+
       // We return the items
       return items
     },
@@ -272,28 +265,6 @@ export default {
     itemsTabAdvanced () {
       // We declare some items
       const items = [
-        {
-          icon: 'mdi-earth',
-          title: 'Universes',
-          to: '/universe',
-          content: [
-            {
-              title: 'Warhammer',
-              srcImg: 'https://aos-tactics.com/wp-content/uploads/2017/02/warhammer-age-of-sigmar-hammer-icon-standard-t-shirt.png',
-              to: '/universe/warhammer'
-            },
-            {
-              title: 'The Witcher',
-              srcImg: 'https://dl1.cbsistatic.com/i/2016/10/20/2b9b17c0-e64a-4d37-955b-2bbff7f9eb10/f7a6e8014e5e20cf9c4da025aec9010d/imgingest-6907707685270604403.png',
-              to: '/universe/witcher'
-            },
-            {
-              title: 'Dungeon & Dragon',
-              srcImg: 'https://i.pinimg.com/originals/48/cb/53/48cb5349f515f6e59edc2a4de294f439.png',
-              to: '/universe/dd'
-            }
-          ]
-        },
         {
           icon: 'mdi-human-handsup',
           title: 'Characters',
@@ -440,6 +411,25 @@ export default {
       // We return the placeholder
       return placeholder
     }
+  },
+
+  mounted () {
+    traverson.from('http://localhost:3000/api/v1')
+      .follow('$._links.universes')
+      .getResource().result
+      .then((document) => {
+        this.universes = document.universes
+        return Promise.all(this.universes.map((universe) => {
+          traverson.from(universe._links.user.href)
+            .getResource().result
+            .then((document) => {
+              this.$set(universe, 'user', document)
+            })
+        }))
+      })
+      .catch((err) => {
+        throw err.message
+      })
   },
 
   methods: {
