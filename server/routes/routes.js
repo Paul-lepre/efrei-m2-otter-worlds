@@ -4,7 +4,7 @@ import universeRouter from './universe.js'
 import characterRouter from './character.js'
 import inventoryRouter from './inventory.js'
 import templateCategoryRouter from './templateCategory.js'
-// import templateStatRouter from './templateStat.js'
+import templateStatRouter from './templateStat.js'
 // import statRouter from './stat.js'
 const apiRouter = Router()
 
@@ -18,7 +18,7 @@ apiRouter.use('/universes', universeRouter)
 apiRouter.use('/characters', characterRouter)
 apiRouter.use('/inventories', inventoryRouter)
 apiRouter.use('/template-categories', templateCategoryRouter)
-// apiRouter.use('/template-stats', templateStatRouter)
+apiRouter.use('/template-stats', templateStatRouter)
 // apiRouter.use('/stats', statRouter)
 
 apiRouter.get('/', (req, res) => {
