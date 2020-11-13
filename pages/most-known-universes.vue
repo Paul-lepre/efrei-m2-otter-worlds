@@ -12,11 +12,16 @@
         <v-card-title>
           <v-container fluid class="pa-0">
             <v-row align="center" justify="center">
+              <!-- Logo -->
               <v-col md="2" align="right">
                 <v-img src="/logo.png" max-height="100" max-width="100" contain />
               </v-col>
+
+              <!-- Title -->
               <v-col md="5">
-                <h1>{{ universe.name }}</h1>
+                <h1 class="primary--text">
+                  {{ universe.name }}
+                </h1>
               </v-col>
             </v-row>
           </v-container>

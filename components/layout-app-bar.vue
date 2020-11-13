@@ -2,7 +2,6 @@
   <div>
     <!-- App bar (navbar) -->
     <v-app-bar
-      class=""
       app
     >
       <v-spacer />
@@ -148,7 +147,7 @@
             </template>
 
             <!-- LIST -->
-            <v-list v-if="typeof item.content !== 'undefined'">
+            <v-list v-if="typeof item.content !== 'undefined' && item.content.length !== 0">
               <v-list-item
                 v-for="(content, index) in item.content"
                 :key="index"
@@ -230,6 +229,7 @@ export default {
   },
 
   computed: {
+    // Items to display when a user is NOT browsing an universe
     itemsTabDefault () {
       // We declare some items
       const items = [
@@ -262,6 +262,7 @@ export default {
       return items
     },
 
+    // Items to display when a user is browsing an universe
     itemsTabAdvanced () {
       // We declare some items
       const items = [
@@ -339,6 +340,7 @@ export default {
       return items
     },
 
+    // Returns the items to display in the App bar Tabs depending on the situation
     itemsTab () {
       if (this.displayDefaultTabs) {
         return this.itemsTabDefault
@@ -347,10 +349,12 @@ export default {
       }
     },
 
+    // Returns whether a user is logged or not
     isUserLogged () {
       return this.name.length !== 0
     },
 
+    // Items to put in the search bar
     searchBarItems () {
       return [
         'John Frusciante',
@@ -379,6 +383,7 @@ export default {
       ]
     },
 
+    // Fills the Search bar with a string containing some of the items from a list
     populateSearchBar () {
       // We create a copy of the searchBarItems (since we'll use slice)
       const items = this.searchBarItems
