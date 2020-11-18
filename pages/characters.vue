@@ -41,14 +41,14 @@
                           v-on="on"
                         >{{ character.user.username }}</span>
                       </template>
-                      <span>{{ character.work }}'s user page</span>
+                      <span>{{ character.user.username }}'s user page</span>
                     </v-tooltip>
                   </router-link>
 
                   <br>
 
                   <!-- Character's race... -->
-                  <router-link class="text-decoration-none white--text" :to="'/universe/wiki/' + character.work">
+                  <router-link class="text-decoration-none white--text" :to="'/universe/wiki/' + character.job">
                     <v-tooltip bottom :open-delay="250">
                       <template v-slot:activator="{ on, attrs }">
                         <span
@@ -60,16 +60,16 @@
                     </v-tooltip>
                   </router-link>
 
-                  <!-- ...and work -->
-                  <router-link class="text-decoration-none white--text" :to="'/universe/wiki/' + character.work">
+                  <!-- ...and job -->
+                  <router-link class="text-decoration-none white--text" :to="'/universe/wiki/' + character.job">
                     <v-tooltip bottom :open-delay="250">
                       <template v-slot:activator="{ on, attrs }">
                         <span
                           v-bind="attrs"
                           v-on="on"
-                        >{{ character.work.toLowerCase() }}</span>
+                        >{{ character.job.toLowerCase() }}</span>
                       </template>
-                      <span>{{ character.work }}'s wiki page</span>
+                      <span>{{ character.job }}'s wiki page</span>
                     </v-tooltip>
                   </router-link>
                 </h3>
@@ -110,7 +110,7 @@ export default {
             username: 'J3@n C@st3x'
           },
           name: 'John DOE',
-          work: this.arrayJobs[Math.floor(Math.random() * this.arrayJobs.length)],
+          job: this.arrayJobs[Math.floor(Math.random() * this.arrayJobs.length)],
           race: this.arrayRaces[Math.floor(Math.random() * this.arrayRaces.length)],
           src: `https://picsum.photos/500/300?image=${i * 5 + 10}`
         }
