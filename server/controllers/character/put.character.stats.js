@@ -6,7 +6,6 @@ export default function putCharacterStat (req, res) {
       res.sendStatus(200)
     })
     .catch((err) => {
-      console.log('HERE !')
       res.status(400).json(err.message)
       throw err
     })
