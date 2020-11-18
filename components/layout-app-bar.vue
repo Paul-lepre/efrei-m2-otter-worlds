@@ -2,6 +2,7 @@
   <div>
     <!-- App bar (navbar) -->
     <v-app-bar
+      hide-on-scroll
       app
     >
       <v-spacer />
@@ -30,7 +31,22 @@
       <v-spacer />
 
       <!-- Search bar -->
+      <!-- Search bar (on small screen) -->
       <v-text-field
+        class="shrink d-flex d-md-none"
+        placeholder="..."
+        hide-details
+        single-line
+        clearable
+      >
+        <v-icon slot="prepend">
+          mdi-magnify
+        </v-icon>
+      </v-text-field>
+
+      <!-- Search bar (on big screen) -->
+      <v-text-field
+        class="shrink d-none d-md-flex"
         :placeholder="populateSearchBar"
         hide-details
         single-line
@@ -200,7 +216,6 @@ export default {
     return {
       name: '',
       // name: 'John DOE',
-      displayDefaultTabs: true,
       isDialogActive: false,
       universes: [],
       itemsProfile: [
@@ -342,16 +357,21 @@ export default {
 
     // Returns the items to display in the App bar Tabs depending on the situation
     itemsTab () {
-      if (this.displayDefaultTabs) {
-        return this.itemsTabDefault
-      } else {
+      if (this.isUniverseSelected) {
         return this.itemsTabAdvanced
+      } else {
+        return this.itemsTabDefault
       }
     },
 
     // Returns whether a user is logged or not
     isUserLogged () {
       return this.name.length !== 0
+    },
+
+    // Returns whether a user is logged or not
+    isUniverseSelected () {
+      return false
     },
 
     // Items to put in the search bar
